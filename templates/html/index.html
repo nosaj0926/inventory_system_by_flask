@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="(( url_for('static', filename='js/index.js')))"></script>
+    <link rel="stylesheet" href="(( url_for('static', filename='css/index.css')))"></link>
+
+    <title>在庫管理</title>
+</head>
+
+<body>
+    <article>
+        <section>
+            <div id="item_list" class="container page-body fit-sidebar-no-fixed-now">
+                <h3>在庫管理システム
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createModal">新規作成</button>
+                </h3>
+                <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="createModalLabel">在庫の追加</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                            </div>
+                            <div class="modal-body">
+                                <p> <label for="id">ID：</label> <input id="id" name="id" type="text" /></p>
+                                <p> <label for="name">名前：</label> <input id="name" name="name" type="text" /></p>
+                                <p> <label for="amount">数量：</label> <input id="amount" name="amount" type="text" /></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+                                <button type="button" class="btn btn-primary" onclick="createItem()">変更を保存</button>
+                            </div>
+                            <!-- /.modal-footer -->
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
+                <div class="row">
+                    <div class="card-deck">
+                        <transition-group name="slide-fade" tag="p">
+                            <div v-for="item in items" class="card col-sm-4 list-item" style="width: 18rem;" v-bind:key="item.id">
+                                <img class="card-img-top" src="(( url_for('static', filename='noimage.jpeg')))" alt="カードの画像">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ item.name }}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">ID: {{ item.id }}</h6>
+                                    <p class="card-text">数量： {{item.amount}}</p>
+                                    <p class="mb-0">
+                                        <a v-on:click="deleteelement(item.id)" class="btn btn-secondary btn-sm">削除</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </transition-group>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </article>
+</body>
+
+</html>
